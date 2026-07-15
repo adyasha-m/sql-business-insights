@@ -75,18 +75,18 @@ erDiagram
 
 ## Query Summary
 
-| Query                                                | Stakeholder         | Business Question                                                    | SQL Concepts                               |
-| :--------------------------------------------------- | :------------------ | :------------------------------------------------------------------- | :----------------------------------------- |
-| [Q1](queries/q1_daily_business_summary.sql)          | CEO                 | How is the business performing day-to-day?                           | CTEs, `lag()`, DoD & WoW comparisons       |
-| [Q2](queries/q2_monthly_signup_cohort_retention.sql) | Growth              | How well are new customer cohorts retained?                          | Cohort analysis, conditional aggregation   |
-| [Q3](queries/q3_funnel_conversion_by_channel.sql)    | CMO                 | Where do customers drop off across the marketing funnel?             | FILTER clause, funnel analysis             |
-| [Q4](queries/q4_product_net_revenue.sql)             | CFO                 | Which products generate the highest net revenue after refunds?       | Multi-CTEs, proportional refund allocation |
-| [Q5](queries/q5_category_health.sql)                 | Category Manager    | Which categories drive revenue and returns?                          | Multi-table joins, return rate calculation |
-| [Q6](queries/q6_payment_failure_analysis.sql)        | Payments PM         | Which payment methods fail most, and why?                            | Window ranking, Top-N per group            |
-| [Q7](queries/q7_delivery_sla.sql)                    | Operations Head     | Which carriers miss delivery SLAs?                                   | Percentiles, FILTER aggregation            |
-| [Q8](queries/q8_customer_ltv.sql)                    | CRM Lead            | Who are the highest-value customers?                                 | CASE expressions, window functions         |
-| [Q9](queries/q9_repeat_purchase_interval.sql)        | Lifecycle Marketing | When do customers typically return for another purchase?             | `lead()`, percentiles                      |
-| [Q10](queries/q10_attribution_comparison.sql)        | Marketing           | How does revenue attribution change under first-touch vs last-touch? | `row_number()`, window functions           |
+| Query                                                                                          | Stakeholder         | Business Question                                                    | SQL Concepts                               |
+| :--------------------------------------------------------------------------------------------- | :------------------ | :------------------------------------------------------------------- | :----------------------------------------- |
+| [Q1](queries/01_daily_business_summary.sql)                                                    | CEO                 | How is the business performing day-to-day?                           | CTEs, `lag()`, DoD & WoW comparisons       |
+| [Q2](queries/02_monthly_cohort_retention.sql)                                                  | Growth              | How well are new customer cohorts retained?                          | Cohort analysis, conditional aggregation   |
+| [Q3](queries/03_funnel_by_acquisition.sql)                                                     | CMO                 | Where do customers drop off across the marketing funnel?             | FILTER clause, funnel analysis             |
+| [Q4](queries/04_top_products_by_revenue.sql)                                                   | CFO                 | Which products generate the highest net revenue after refunds?       | Multi-CTEs, proportional refund allocation |
+| [Q5](queries/05_category_health.sql)                                                           | Category Manager    | Which categories drive revenue and returns?                          | Multi-table joins, return rate calculation |
+| [Q6](queries/06_payment_failure_analysis.sql)                                                  | Payments PM         | Which payment methods fail most, and why?                            | Window ranking, Top-N per group            |
+| [Q7](queries/07_delivery_SLA_breach.sql)                                                       | Operations Head     | Which carriers miss delivery SLAs?                                   | Percentiles, FILTER aggregation            |
+| [Q8](queries/08_customer_LTV_bucket_share.sql)                                                 | CRM Lead            | Who are the highest-value customers?                                 | CASE expressions, window functions         |
+| [Q9](queries/09_repeat_purchase_interval.sql) [Q9-A](queries/09_repeat_purchase_summaries.sql) | Lifecycle Marketing | When do customers typically return for another purchase?             | `lead()`, percentiles                      |
+| [Q10](queries/10_attribution_first_vs_last.sql)                                                | Marketing           | How does revenue attribution change under first-touch vs last-touch? | `row_number()`, window functions           |
 
 ---
 
