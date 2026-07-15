@@ -1,54 +1,62 @@
 -- Q10: Attribution Comparison - First-Touch vs Last-Touch Revenue by Channel
--- Owner: Adyasha  |  Last updated: 2026-07-11
+-- Owner: Adyasha  |  Last updated: 2026-07-15
 -- Sanity check:
 -- Total revenue under first_touch equals total revenue under last_touch
 -- and equals total non-cancelled revenue from ecom.orders (within 0.5%).
 -- Orders without attribution touches are bucketed as 'direct'.
 
-with ranked_touches as (
+with customer_touches as (
 
     select
-        at.session_id
+        o.order_id
       , at.channel
       , at.touched_at
-      , row_number()
-            over (
-                partition by at.session_id
-                order by at.touched_at
-            )                                                      as first_touch_rank
-      , row_number()
-            over (
-                partition by at.session_id
-                order by at.touched_at desc
-            )                                                      as last_touch_rank
+      , row_number() over (
+            partition by o.order_id
+            order by at.touched_at
+        )                                                          as first_touch_rank
+      , row_number() over (
+            partition by o.order_id
+            order by at.touched_at desc
+        )                                                          as last_touch_rank
 
-    from ecom.attribution_touches at
+    from ecom.orders o
+
+    inner join ecom.sessions s
+        on o.customer_id = s.customer_id
+
+    inner join ecom.attribution_touches at
+        on s.session_id = at.session_id
+
+    where
+        lower(o.status) <> 'cancelled'
+        and at.touched_at <= o.created_at
 
 )
 
 , first_touch as (
 
     select
-        rt.session_id
-      , rt.channel
+        ct.order_id
+      , ct.channel
 
-    from ranked_touches rt
+    from customer_touches ct
 
     where
-        rt.first_touch_rank = 1
+        ct.first_touch_rank = 1
 
 )
 
 , last_touch as (
 
     select
-        rt.session_id
-      , rt.channel
+        ct.order_id
+      , ct.channel
 
-    from ranked_touches rt
+    from customer_touches ct
 
     where
-        rt.last_touch_rank = 1
+        ct.last_touch_rank = 1
 
 )
 
@@ -63,7 +71,7 @@ with ranked_touches as (
     from ecom.orders o
 
     left join first_touch ft
-        on o.session_id = ft.session_id
+        on o.order_id = ft.order_id
 
     where
         lower(o.status) <> 'cancelled'
@@ -79,7 +87,7 @@ with ranked_touches as (
     from ecom.orders o
 
     left join last_touch lt
-        on o.session_id = lt.session_id
+        on o.order_id = lt.order_id
 
     where
         lower(o.status) <> 'cancelled'
