@@ -90,10 +90,10 @@
 
 ## Q10 — Attribution Comparison: First-Touch vs Last-Touch Revenue by Channel
 
-**What the query does:** Compares revenue attribution under first-touch and last-touch models to see whether different channels drive discovery versus conversion.
+**What the query does:** Compares revenue attribution under first-touch and last-touch models to understand which channels introduce customers versus which channels ultimately drive conversions.
 
-**Pattern choice:** Ranked attribution touches per session using `row_number()` to identify the first and last touch, then attributed each non-cancelled order under both models before comparing the revenue split across channels.
+**Pattern choice:** Ranked attribution touches for each order using `row_number()` over the customer's touch history before the purchase, then attributed every non-cancelled order under both first-touch and last-touch models before comparing the revenue split across channels.
 
-**Business interpretation:** First-touch and last-touch attribution produce **identical results** across all channels, with Organic contributing **40%** of revenue, Paid **35%**, and Referral **12%**. Since the channel mix doesn't change between attribution models, the data suggests customers typically have a single recorded marketing touch before purchasing, or their first and last touch are the same. In this dataset, the choice of attribution model has **no impact** on marketing performance measurement.
+**Business interpretation:** The attribution model changes the revenue mix, but only slightly. Under **first-touch**, **Paid** accounts for **36%** of revenue versus **35%** under last-touch, while **Email** grows from **6.3%** to **7.1%** under last-touch. **Organic** remains the largest channel at around **40%** under both models, suggesting it consistently drives customer acquisition, while Email appears to play a slightly stronger role closer to conversion. Overall, the marketing mix is fairly stable, but some channels contribute differently depending on where they influence the customer journey.
 
-**What I'd ask next:** Is this because customers genuinely interact with only one channel, or are attribution touches missing? I'd check the average number of attribution touches per session and investigate whether cross-channel journeys are being captured correctly.
+**What I'd ask next:** How many marketing touches does a customer typically have before purchasing? I'd also compare the average time between the first touch, last touch, and purchase to understand which channels introduce customers early versus help close the sale
